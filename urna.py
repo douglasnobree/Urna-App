@@ -2,6 +2,7 @@ import sys #Encerra o programa
 
 # Declaração de variáveis
 votosBrancos = []
+votosNulos = []
 cpfVotados = []
 senhaApuracao = '12345'
 cpf = ''
@@ -35,29 +36,34 @@ candidato3 = {
 # Declaração de funções
 
 def apurarVotos():
+    global candidatoPrimeiroTurno
     inputApuracao = input(f'Digite a senha de apuração: ')
-    if inputApuracao == senhaApuracao:
-        print(f'{"":^10} Apuração de Votos {"":^10}')
-        print(f'{"":^10} Urna Tabualgo {"":^10}')
-        print(f'{"":^10} Senha: {senhaApuracao} {"":^10}\n')
-        
-        candidatos_Decrescente = sorted([candidato1, candidato2, candidato3], key=lambda k: k['votos'], reverse=True)
-        
-        for candidato in candidatos_Decrescente:
-            print(f'{candidato["nome"]} Total de votos: {candidato["votos"]}')
-        print(f'Total de votos em branco: {len(votosBrancos)}')
-        print(f'Cpf dos votantes: {cpfVotados}')
-        
-        for candidatoContagem in candidatos_Decrescente:
-            if candidatoContagem['votos'] > 2/(candidato1["votos"]+candidato2["votos"]+candidato3["votos"]+1):
-                print(f'{"":^10} Candidato eleito: {candidatoContagem["nome"]} {"":^10}')
-                candidatoPrimeiroTurno = True
-        
-        if candidatoPrimeiroTurno == False:
-            print(f'Segundo turno irá acontecer com os 2 mais votados')
-        
-        print(f'Sessão encerrada')
+    if len(cpfVotados) == 0:
+        print(f'Nenhum voto computado! Sessão encerrada.')
         sys.exit()
+    elif len(cpfVotados) >= 2:
+        if inputApuracao == senhaApuracao:
+            print(f'{"":^10} Apuração de Votos {"":^10}')
+            print(f'{"":^10} Urna Tabualgo {"":^10}')
+            print(f'{"":^10} Senha: {senhaApuracao} {"":^10}\n')
+            
+            candidatos_Decrescente = sorted([candidato1, candidato2, candidato3], key=lambda k: k['votos'], reverse=True)
+            
+            for candidato in candidatos_Decrescente:
+                print(f'{candidato["nome"]} Total de votos: {candidato["votos"]}')
+            print(f'Total de votos em branco: {len(votosBrancos)}')
+            print(f'Cpf dos votantes: {cpfVotados}')
+            
+            for candidatoContagem in candidatos_Decrescente:
+                if candidatoContagem['votos'] > 2/(candidato1["votos"]+candidato2["votos"]+candidato3["votos"]+1):
+                    print(f'{"":^10} Candidato eleito: {candidatoContagem["nome"]} {"":^10}')
+                    candidatoPrimeiroTurno = True
+            
+            if candidatoPrimeiroTurno == False:
+                print(f'Segundo turno irá acontecer com os 2 mais votados')
+            
+            print(f'Sessão encerrada')
+            sys.exit()
     else:
         print(f'Senha incorreta!')
         return
@@ -89,9 +95,6 @@ def votarCandidato():
                 candidato1['votos'] += 1
                 cpfVotados.append(cpf)
                 print(f'Voto computado com sucesso!')
-            elif confirmar != 'S' or confirmar != 'N':
-                print(f'Opção inválida! Tente novamente.')
-                return
             else:
                 print(f'Voto cancelado!')
                 return
@@ -105,9 +108,6 @@ def votarCandidato():
                 candidato1['votos'] += 1
                 cpfVotados.append(cpf)
                 print(f'Voto computado com sucesso!')
-            elif confirmar != 'S' or confirmar != 'N':
-                print(f'Opção inválida! Tente novamente.')
-                return
             else:
                 print(f'Voto cancelado!')
                 return
@@ -121,9 +121,6 @@ def votarCandidato():
                 candidato1['votos'] += 1
                 cpfVotados.append(cpf)
                 print(f'Voto computado com sucesso!')
-            elif confirmar != 'S' or confirmar != 'N':
-                print(f'Opção inválida! Tente novamente.')
-                return
             else:
                 print(f'Voto cancelado!')
                 return
@@ -132,9 +129,19 @@ def votarCandidato():
             cpfVotados.append(cpf)
             print(f'Voce passou do limite de tentativas, seu voto foi computado em branco!')
             maxErros = 0
-        else:
-            print(f'Opção inválida! Tente novamente.')
-            return
+        elif opcaoVotar != 45 or opcaoVotar != 13 or opcaoVotar != 12:
+            print(f'Voce esta votando no candidato Invalido!')
+            confirmar = input(f'Confirmar? (S): ou CORRIGIR?(C)').upper()
+            if confirmar == 'S':
+                votosNulos.append(opcaoVotar)
+                cpfVotados.append(cpf)
+                print(f'Voto computado como Nulo!')
+            elif confirmar == 'C':
+                maxErros += 1
+                votarCandidato()
+            else:
+                print(f'Voto cancelado!')
+                return
     else:
         print(f'Você já votou!')
 
