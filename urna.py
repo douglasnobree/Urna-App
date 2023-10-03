@@ -1,10 +1,10 @@
 import sys #Encerra o programa
-import pygame
-
+import pygame #Biblioteca de audio
 pygame.init()
-som = pygame.mixer.Sound('src/audioConfirm.wav')
+
 
 # Declaração de variáveis
+som = pygame.mixer.Sound('src/audioConfirm.wav')
 votosBrancos = []
 votosNulos = []
 cpfVotados = []
