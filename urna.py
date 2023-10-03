@@ -1,4 +1,8 @@
 import sys #Encerra o programa
+import pygame
+
+pygame.init()
+som = pygame.mixer.Sound('src/audioConfirm.wav')
 
 # Declaração de variáveis
 votosBrancos = []
@@ -94,6 +98,7 @@ def votarCandidato():
             elif confirmar == 'S':
                 candidato1['votos'] += 1
                 cpfVotados.append(cpf)
+                som.play()
                 print(f'Voto computado com sucesso!')
             else:
                 print(f'Voto cancelado!')
@@ -105,8 +110,9 @@ def votarCandidato():
                 maxErros += 1
                 votarCandidato()
             if confirmar == 'S':
-                candidato1['votos'] += 1
+                candidato2['votos'] += 1
                 cpfVotados.append(cpf)
+                som.play()
                 print(f'Voto computado com sucesso!')
             else:
                 print(f'Voto cancelado!')
@@ -118,8 +124,9 @@ def votarCandidato():
                 maxErros += 1
                 votarCandidato()
             if confirmar == 'S':
-                candidato1['votos'] += 1
+                candidato3['votos'] += 1
                 cpfVotados.append(cpf)
+                som.play()
                 print(f'Voto computado com sucesso!')
             else:
                 print(f'Voto cancelado!')
@@ -135,6 +142,7 @@ def votarCandidato():
             if confirmar == 'S':
                 votosNulos.append(opcaoVotar)
                 cpfVotados.append(cpf)
+                som.play()
                 print(f'Voto computado como Nulo!')
             elif confirmar == 'C':
                 maxErros += 1
@@ -157,6 +165,7 @@ def candidatoOuBranco():
         if cpf not in cpfVotados:
             votosBrancos.append(opcaoVotar)
             cpfVotados.append(cpf)
+            som.play()
             print(f'Voto em branco computado com sucesso!')
         else:
             print(f'Você já votou!')
