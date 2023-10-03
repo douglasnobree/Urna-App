@@ -1,3 +1,4 @@
+#Douglas Nobre
 import sys #Encerra o programa
 import pygame #Biblioteca de audio
 pygame.init()
