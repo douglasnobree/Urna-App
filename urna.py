@@ -1,11 +1,13 @@
 #Douglas Nobre
 import sys #Encerra o programa
-import pygame #Biblioteca de audio
-pygame.init()
+
+#import pygame #Biblioteca para tocar o som, comentei para não dar erro. caso queira usar, descomente e instale o pygame
+
+# pygame.init()
 
 
 # Declaração de variáveis
-som = pygame.mixer.Sound('src\confirm.wav')
+# som = pygame.mixer.Sound('src\confirm.wav')
 votosBrancos = []
 votosNulos = []
 cpfVotados = []
@@ -66,7 +68,7 @@ def apurarVotos(): #Função para apurar os votos
             
             if qntdEleitos >= 2:
                 print(f'{"":^10} Segundo turno! {"":^10}')
-                print(f'A votação irá ocorrer entre os 2 mais votados')
+                print(f'A votação irá ocorrer entre {candidatos_Decrescente[0]["nome"]} e {candidatos_Decrescente[1]["nome"]}')
             
             print(f'Sessão encerrada')
             sys.exit()
@@ -100,7 +102,7 @@ def votarCandidato():#Função para votar no candidato
             elif confirmar == 'S':
                 candidato1['votos'] += 1
                 cpfVotados.append(cpf)
-                som.play()
+                # som.play()
                 print(f'Voto computado com sucesso!')
             else:
                 print(f'Voto cancelado!')
@@ -114,7 +116,7 @@ def votarCandidato():#Função para votar no candidato
             if confirmar == 'S':
                 candidato2['votos'] += 1
                 cpfVotados.append(cpf)
-                som.play()
+                # som.play()
                 print(f'Voto computado com sucesso!')
             else:
                 print(f'Voto cancelado!')
@@ -128,7 +130,7 @@ def votarCandidato():#Função para votar no candidato
             if confirmar == 'S':
                 candidato3['votos'] += 1
                 cpfVotados.append(cpf)
-                som.play()
+                # som.play()
                 print(f'Voto computado com sucesso!')
             else:
                 print(f'Voto cancelado!')
@@ -136,7 +138,7 @@ def votarCandidato():#Função para votar no candidato
         elif maxErros == 3:
             votosBrancos.append(opcaoVotar)
             cpfVotados.append(cpf)
-            som.play()
+            # som.play()
             print(f'Voce passou do limite de tentativas, seu voto foi computado em branco!')
             maxErros = 0
         elif opcaoVotar != 45 or opcaoVotar != 13 or opcaoVotar != 12:
@@ -145,7 +147,7 @@ def votarCandidato():#Função para votar no candidato
             if confirmar == 'S':
                 votosNulos.append(opcaoVotar)
                 cpfVotados.append(cpf)
-                som.play()
+                # som.play()
                 print(f'Voto computado como Nulo!')
             elif confirmar == 'C':
                 maxErros += 1
@@ -168,7 +170,7 @@ def candidatoOuBranco():#Função para escolher entre votar em candidato ou em b
         if cpf not in cpfVotados:
             votosBrancos.append(opcaoVotar)
             cpfVotados.append(cpf)
-            som.play()
+            # som.play()
             print(f'Voto em branco computado com sucesso!')
         else:
             print(f'\n\nVocê já votou!')
