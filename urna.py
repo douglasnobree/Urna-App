@@ -5,13 +5,13 @@ pygame.init()
 
 
 # Declaração de variáveis
-som = pygame.mixer.Sound('src/audioConfirm.wav')
+som = pygame.mixer.Sound("Trabalho Urna\src\confirm.wav")
 votosBrancos = []
 votosNulos = []
 cpfVotados = []
 senhaApuracao = '12345'
+qntdEleitos = 0
 cpf = ''
-candidatoPrimeiroTurno = False
 maxErros = 0
 
 # Candidatos
@@ -41,7 +41,7 @@ candidato3 = {
 # Declaração de funções
 
 def apurarVotos():
-    global candidatoPrimeiroTurno
+    global qntdEleitos
     inputApuracao = input(f'Digite a senha de apuração: ')
     if len(cpfVotados) == 0:
         print(f'Nenhum voto computado! Sessão encerrada.')
@@ -52,7 +52,7 @@ def apurarVotos():
             print(f'{"":^10} Urna Tabualgo {"":^10}')
             print(f'{"":^10} Senha: {senhaApuracao} {"":^10}\n')
             
-            candidatos_Decrescente = sorted([candidato1, candidato2, candidato3], key=lambda k: k['votos'], reverse=True)
+            candidatos_Decrescente = sorted([candidato1, candidato2, candidato3], key=lambda qntdVotos: qntdVotos['votos'], reverse=True)
             
             for candidato in candidatos_Decrescente:
                 print(f'{candidato["nome"]} Total de votos: {candidato["votos"]}')
@@ -62,15 +62,16 @@ def apurarVotos():
             for candidatoContagem in candidatos_Decrescente:
                 if candidatoContagem['votos'] > 2/(candidato1["votos"]+candidato2["votos"]+candidato3["votos"]+1):
                     print(f'{"":^10} Candidato eleito: {candidatoContagem["nome"]} {"":^10}')
-                    candidatoPrimeiroTurno = True
+                    qntdEleitos += 1
             
-            if candidatoPrimeiroTurno == False:
-                print(f'Segundo turno irá acontecer com os 2 mais votados')
+            if qntdEleitos >= 2:
+                print(f'{"":^10} Segundo turno! {"":^10}')
+                print(f'A votação irá ocorrer entre os 2 mais votados')
             
             print(f'Sessão encerrada')
             sys.exit()
     else:
-        print(f'Senha incorreta!')
+        print(f'Senha incorreta! ou numero de votos insuficiente para apuração')
         return
 
 def digitarCpf():
@@ -135,6 +136,7 @@ def votarCandidato():
         elif maxErros == 3:
             votosBrancos.append(opcaoVotar)
             cpfVotados.append(cpf)
+            som.play()
             print(f'Voce passou do limite de tentativas, seu voto foi computado em branco!')
             maxErros = 0
         elif opcaoVotar != 45 or opcaoVotar != 13 or opcaoVotar != 12:
