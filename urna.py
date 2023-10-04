@@ -5,7 +5,7 @@ pygame.init()
 
 
 # Declaração de variáveis
-som = pygame.mixer.Sound("Trabalho Urna\src\confirm.wav")
+som = pygame.mixer.Sound('src\confirm.wav')
 votosBrancos = []
 votosNulos = []
 cpfVotados = []
@@ -16,7 +16,7 @@ maxErros = 0
 
 # Candidatos
 candidato1 = {
-    'numero': 45,
+    'numero': 45, #Dicionario para armazenar os dados dos candidatos
     'nome': 'José Silvério dos Reis',
     'partido': 'PTC',
     'cargo': 'Prefeito',
@@ -40,7 +40,7 @@ candidato3 = {
 
 # Declaração de funções
 
-def apurarVotos():
+def apurarVotos(): #Função para apurar os votos
     global qntdEleitos
     inputApuracao = input(f'Digite a senha de apuração: ')
     if len(cpfVotados) == 0:
@@ -74,7 +74,7 @@ def apurarVotos():
         print(f'Senha incorreta! ou numero de votos insuficiente para apuração')
         return
 
-def digitarCpf():
+def digitarCpf():#Função para digitar o cpf
     global cpf
     cpf = input(f'\n\nPrimeiramente, digite seu CPF (Sem formatação) para se identificar:')
     print('')
@@ -82,7 +82,7 @@ def digitarCpf():
         print(f'CPF inválido! Tente novamente.')
         digitarCpf()
 
-def votarCandidato():
+def votarCandidato():#Função para votar no candidato
     global maxErros
     if cpf not in cpfVotados:
         print(f'Digite o numero de seu Candidato!!: ')
@@ -92,7 +92,7 @@ def votarCandidato():
         opcaoVotar = int(input(f'Opção: '))
         if opcaoVotar == 45 and maxErros < 3:
             print(f'Voce esta votando no candidato {candidato1["nome"]}!')
-            confirmar = input(f'Confirma? (S/N): ou CORRIGIR?(C)').upper()
+            confirmar = input(f'Confirmar? (S): ou CORRIGIR?(C)').upper()
             if confirmar == 'C':
                 maxErros += 1
                 print(f'voce tem mais {3 - maxErros} chances para digitar o numero do candidato')
@@ -107,7 +107,7 @@ def votarCandidato():
                 return
         elif opcaoVotar == 13 and maxErros < 3:
             print(f'Voce esta votando no candidato {candidato1["nome"]}!')
-            confirmar = input(f'Confirma? (S/N): ou CORRIGIR?(C)').upper()
+            confirmar = input(f'Confirma? (S): ou CORRIGIR?(C)').upper()
             if confirmar == 'C':
                 maxErros += 1
                 votarCandidato()
@@ -121,7 +121,7 @@ def votarCandidato():
                 return
         elif opcaoVotar == 12 and maxErros < 3:
             print(f'Voce esta votando no candidato {candidato1["nome"]}!')
-            confirmar = input(f'Confirma? (S/N): ou CORRIGIR?(C)').upper()
+            confirmar = input(f'Confirma? (S): ou CORRIGIR?(C)').upper()
             if confirmar == 'C':
                 maxErros += 1
                 votarCandidato()
@@ -156,7 +156,7 @@ def votarCandidato():
     else:
         print(f'Você já votou!')
 
-def candidatoOuBranco():
+def candidatoOuBranco():#Função para escolher entre votar em candidato ou em branco
     print(f'\n\n{"":^10} Urna Tabualgo {"":^10}\n\n')
     print(f'1 - Votar em Candidato{"":^10} 2 - Votar em Branco\n\n')
     opcaoVotar = int(input(f'Opção: '))
@@ -171,7 +171,7 @@ def candidatoOuBranco():
             som.play()
             print(f'Voto em branco computado com sucesso!')
         else:
-            print(f'Você já votou!')
+            print(f'\n\nVocê já votou!')
 
 # Programa principal
 
@@ -192,7 +192,7 @@ while True:
     elif opcao == 2:
         apurarVotos()
     elif opcao == 3:
-        digitarCpf()
+        digitarCpf() #eu sei que é o titulo, mas preferir colocar cpf
     else:
         print(f'Opção inválida! Tente novamente.')
         continue
